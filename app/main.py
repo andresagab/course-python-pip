@@ -1,0 +1,41 @@
+import utils
+import read_csv
+import charts
+
+
+def run(onlyCountry=True):
+
+  # get data from csv file
+  data = read_csv.readCSV('./data.csv')
+  if onlyCountry:
+    # get search value from user input
+    search = input('Type country => ')
+    # search country
+    country = utils.searchCountry(data, search)
+    # if country was fund
+    if (len(country) > 0):
+      # set county wiht first item of list
+      country = country[0]
+      # get population of country
+      population = utils.getDictionaryPopulationByCountry(country)
+      # generate bar chart
+      charts.generateBarChart(population.keys(), population.values(), country['Country/Territory'])
+
+  else:
+    # get continent search from user input
+    continent = input('Type the continent => ')
+    # filter data by continent
+    countries = list(
+      filter(lambda item: item['Continent'] == continent, data))
+    # get world population percentage from filtered countries
+    worldPopulation = utils.getDataByColumn(countries, 'Country/Territory',
+                                            'World Population Percentage')
+    # if filtered countries have items or data
+    if (len(worldPopulation) > 0):
+      charts.generatePieChart(worldPopulation.keys(), worldPopulation.values(), continent)
+
+
+# enable execute from terminal
+if __name__ == '__main__':
+  run(True)
+  run(False)
