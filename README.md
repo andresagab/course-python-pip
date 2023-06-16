@@ -22,3 +22,27 @@ pip install -r requirements.txt
 # run app
 python main.py
 ```
+
+# WEB-SERVER PROJECT
+
+To run web server execute the next commands in your terminal
+
+```sh
+git clone
+cd web-server
+# create and activate virtual environment
+python -m venv env
+source env/bin/activate
+# install dependencies
+pip install -r requirements.txt
+# run app
+python main.py
+```
+API WEB ROUTES:
+
+```
+# home
+/
+# contact
+/contact
+```

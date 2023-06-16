@@ -1,13 +1,15 @@
 import utils
 import read_csv
 import charts
+import pandas as pd
 
 
 def run(onlyCountry=True):
 
-  # get data from csv file
-  data = read_csv.readCSV('./data.csv')
   if onlyCountry:
+
+    # get data from csv file
+    data = read_csv.readCSV('./data.csv')
     # get search value from user input
     search = input('Type country => ')
     # search country
@@ -22,20 +24,21 @@ def run(onlyCountry=True):
       charts.generateBarChart(population.keys(), population.values(), country['Country/Territory'])
 
   else:
-    # get continent search from user input
-    continent = input('Type the continent => ')
-    # filter data by continent
-    countries = list(
-      filter(lambda item: item['Continent'] == continent, data))
-    # get world population percentage from filtered countries
-    worldPopulation = utils.getDataByColumn(countries, 'Country/Territory',
-                                            'World Population Percentage')
-    # if filtered countries have items or data
-    if (len(worldPopulation) > 0):
-      charts.generatePieChart(worldPopulation.keys(), worldPopulation.values(), continent)
 
+    # read csv
+    dataFrame = pd.read_csv('data.csv')
+    # input search
+    key = input("Type country: ")
+    # filter data frame by key at 'Continent'
+    dataFrame = dataFrame[dataFrame['Continent'] == key]
+    # load countries of continent
+    countries = dataFrame['Country/Territory'].values
+    # load percentages or world population
+    percentages = dataFrame['World Population Percentage'].values
+    # generate chart
+    charts.generatePieChart(countries, percentages, key)
 
 # enable execute from terminal
 if __name__ == '__main__':
-  run(True)
   run(False)
+  run(True)
