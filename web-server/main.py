@@ -21,7 +21,7 @@ def get_list():
             <title>This is a web page</title>
         </head>
         <body>
-            <h1>This is a web page<h1>
+            <h1>This is a web page</h1>
             <p>Hi from paragraph</p>
         </body>
     </html>
